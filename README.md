@@ -1,5 +1,7 @@
 # container2container2wasm
 
+![image](https://github.com/user-attachments/assets/b8335f4a-adaf-4d58-ba6e-3d75e4b13239)
+
 This project provides a workflow to convert Docker images to WebAssembly (WASM) modules using the `container2wasm` tool. The conversion process is encapsulated in a Docker container, and the output files are copied to the local machine after the conversion is complete.
 
 ## Prerequisites
