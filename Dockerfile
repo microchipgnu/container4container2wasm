@@ -15,7 +15,8 @@ RUN apk update && apk add --no-cache \
     git \
     tar \
     wget \
-    jq
+    jq \
+    yq
 
 # Install c2w binaries
 ENV C2W_VERSION="v0.6.4"
@@ -29,10 +30,6 @@ RUN wget https://github.com/ktock/container2wasm/releases/download/${C2W_VERSION
     echo "Moved c2w-net to /usr/local/bin/" && \
     rm -rf container2wasm-${C2W_VERSION}-linux-amd64.tar.gz && \
     echo "Cleaned up downloaded tar.gz file"
-
-# Install yq
-RUN wget https://github.com/mikefarah/yq/releases/download/v4.6.1/yq_linux_amd64 -O /usr/bin/yq && \
-    chmod +x /usr/bin/yq
 
 # Add docker_entrypoint.sh script
 RUN mkdir -p /usr/local/bin/

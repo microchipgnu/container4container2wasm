@@ -8,29 +8,6 @@ C2W_EXTRA_FLAGS_V=${C2W_EXTRA_FLAGS:-}
 LOG_FILE="/var/log/startup.log"
 CONTAINERS_FILE="/usr/local/bin/config.yaml"
 
-# Function to check if yq is installed
-check_yq_installed() {
-    if ! command -v yq &> /dev/null; then
-        echo "yq not found. Installing yq..."
-
-        # Identify the package manager and install yq accordingly
-        if command -v apt-get &> /dev/null; then
-            sudo apt-get update
-            sudo apt-get install -y yq
-        elif command -v yum &> /dev/null; then
-            sudo yum install -y epel-release
-            sudo yum install -y yq
-        elif command -v brew &> /dev/null; then
-            brew install yq
-        else
-            echo "Unsupported package manager. Please install yq manually."
-            exit 1
-        fi
-    else
-        echo "yq is already installed."
-    fi
-}
-
 # Attempt to load overlay module
 if ! modprobe overlay; then
     echo "Warning: overlay module could not be loaded, continuing with fuse-overlayfs"
@@ -49,9 +26,6 @@ exec > >(tee -i $LOG_FILE)
 exec 2>&1
 
 echo "Docker daemon is running."
-
-# Check and install yq if necessary
-check_yq_installed
 
 # Read from the YAML file and process each container
 echo "Reading containers from $CONTAINERS_FILE"
