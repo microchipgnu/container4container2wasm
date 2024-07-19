@@ -14,7 +14,8 @@ RUN apk update && apk add --no-cache \
     shadow \
     git \
     tar \
-    wget
+    wget \
+    jq
 
 # Install c2w binaries
 ENV C2W_VERSION="v0.6.4"
@@ -29,17 +30,21 @@ RUN wget https://github.com/ktock/container2wasm/releases/download/${C2W_VERSION
     rm -rf container2wasm-${C2W_VERSION}-linux-amd64.tar.gz && \
     echo "Cleaned up downloaded tar.gz file"
 
-# Add docker-entrypoint.sh script
-RUN mkdir -p /usr/local/bin/
-COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# Install yq
+RUN wget https://github.com/mikefarah/yq/releases/download/v4.6.1/yq_linux_amd64 -O /usr/bin/yq && \
+    chmod +x /usr/bin/yq
 
-# Copy the src folder
-COPY src /usr/local/bin/src
+# Add docker_entrypoint.sh script
+RUN mkdir -p /usr/local/bin/
+COPY docker_entrypoint.sh /usr/local/bin/docker_entrypoint.sh
+RUN chmod +x /usr/local/bin/docker_entrypoint.sh
+
+# Copy the config.yaml file
+COPY config.yaml /usr/local/bin/config.yaml
 
 # Expose port 8080
 EXPOSE 8080
 
 # Set the entrypoint
-ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+ENTRYPOINT ["/usr/local/bin/docker_entrypoint.sh"]
 CMD ["sh"]

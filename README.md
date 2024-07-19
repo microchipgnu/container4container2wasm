@@ -14,7 +14,7 @@ This project provides a workflow to convert Docker images to WebAssembly (WASM) 
 ```plaintext
 .
 ├── Dockerfile
-├── docker-entrypoint.sh
+├── docker_entrypoint.sh
 ├── run_conversion.sh
 └── src
     ├── example1
@@ -28,7 +28,7 @@ This project provides a workflow to convert Docker images to WebAssembly (WASM) 
 ```
 
 - **Dockerfile**: Builds the Docker image with necessary dependencies.
-- **docker-entrypoint.sh**: Entrypoint script that performs the Docker image to WASM conversion.
+- **docker_entrypoint.sh**: Entrypoint script that performs the Docker image to WASM conversion.
 - **run_conversion.sh**: Bash script to automate the entire workflow.
 - **src**: Directory containing source Dockerfiles or image references along with target architecture and target type files.
 
